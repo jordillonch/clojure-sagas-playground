@@ -21,20 +21,20 @@
   (printf event)
   (printf some-dependency)
   (printf other-dependency)
-  {:saga/state  (update state :stage (constantly :step-1))
-   :cqrs/events [simple-stuff-done]})
+  {:saga/state   (update state :stage (constantly :step-1))
+   :cqrs/effects [simple-stuff-done]})
 
 (defn run-more-stuff [{:keys [saga/state]}]
-  {:saga/state  (update state :stage (constantly :step-2))
-   :cqrs/events [more-stuff-done]})
+  {:saga/state   (update state :stage (constantly :step-2))
+   :cqrs/effects [more-stuff-done]})
 
 (defn run-extra-stuff-a [{:keys [saga/state]}]
-  {:saga/state  (update state :stage (constantly :step-3))
-   :cqrs/events [more-stuff-done]})
+  {:saga/state   (update state :stage (constantly :step-3))
+   :cqrs/effects [more-stuff-done]})
 
 (defn run-extra-stuff-b [{:keys [saga/state]}]
-  {:saga/state  (update state :stage (constantly :all-steps-done))
-   :cqrs/events [all-stuff-done]})
+  {:saga/state   (update state :stage (constantly :all-steps-done))
+   :cqrs/effects [all-stuff-done]})
 
 
 ; saga definition
