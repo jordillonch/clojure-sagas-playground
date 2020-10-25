@@ -3,22 +3,18 @@
 (defn bus-in-memory []
   {:handlers []})
 
-(defn bus-in-memory-add [bus handler-definition]
+(defn add [bus handler-definition]
   (update bus :handlers conj handler-definition))
 
-(defn bus-in-memory-handle-command [bus command]
+(defn handle-command [bus command]
   (-> (filter #(= (:cqrs/name command) (-> % :cqrs/on-command :cqrs/name)) (:handlers bus))
       (first)
       (:cqrs/handler)
-      (apply [command])
-      )
-  )
+      (apply [{:cqrs/command command}])))
 
-(defn bus-in-memory-handle-event [bus event]
+(defn handle-event [bus event]
   (->> (filter #(= (:cqrs/name event) (-> % :cqrs/on-event :cqrs/name)) (:handlers bus))
        (map #(-> %
                  (:cqrs/handler)
-                 (apply [event])))
-       )
-  :cqrs/handle-ok
-  )
+                 (apply [{:cqrs/event event}]))))
+  :cqrs/handle-ok)

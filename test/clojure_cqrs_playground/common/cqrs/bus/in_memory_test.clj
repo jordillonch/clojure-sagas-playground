@@ -58,30 +58,30 @@
 (deftest bus-in-memory-test
   (testing "it should register command handlers"
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add a-command-handler-definition-1))
+               (add a-command-handler-definition-1))
            {:handlers [a-command-handler-definition-1]}))
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add a-command-handler-definition-1)
-               (bus-in-memory-add a-command-handler-definition-2))
+               (add a-command-handler-definition-1)
+               (add a-command-handler-definition-2))
            {:handlers [a-command-handler-definition-1 a-command-handler-definition-2]}))
     )
 
   (testing "it should register event handlers"
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add an-event-handler-definition-1))
+               (add an-event-handler-definition-1))
            {:handlers [an-event-handler-definition-1]}))
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add an-event-handler-definition-1)
-               (bus-in-memory-add an-event-handler-definition-2))
+               (add an-event-handler-definition-1)
+               (add an-event-handler-definition-2))
            {:handlers [an-event-handler-definition-1 an-event-handler-definition-2]}))
     )
 
   (testing "it should register command and event handlers"
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add a-command-handler-definition-1)
-               (bus-in-memory-add an-event-handler-definition-1)
-               (bus-in-memory-add a-command-handler-definition-2)
-               (bus-in-memory-add an-event-handler-definition-2))
+               (add a-command-handler-definition-1)
+               (add an-event-handler-definition-1)
+               (add a-command-handler-definition-2)
+               (add an-event-handler-definition-2))
            {:handlers [a-command-handler-definition-1
                        an-event-handler-definition-1
                        a-command-handler-definition-2
@@ -90,13 +90,13 @@
 
   (testing "it should handle a command"
     (is (= (-> (bus-in-memory)
-               (bus-in-memory-add a-command-handler-definition-1)
-               (bus-in-memory-handle-command a-command-1))
+               (add a-command-handler-definition-1)
+               (handle-command a-command-1))
            :cqrs/handle-ok)))
 
   (testing "it should handle an event")
   (is (= (-> (bus-in-memory)
-             (bus-in-memory-add an-event-handler-definition-1)
-             (bus-in-memory-add an-event-handler-definition-1)
-             (bus-in-memory-handle-event an-event-1))
+             (add an-event-handler-definition-1)
+             (add an-event-handler-definition-1)
+             (handle-event an-event-1))
          :cqrs/handle-ok)))
