@@ -88,6 +88,15 @@
                        an-event-handler-definition-2]}))
     )
 
-  (testing "it should handle a command")
+  (testing "it should handle a command"
+    (is (= (-> (bus-in-memory)
+               (bus-in-memory-add a-command-handler-definition-1)
+               (bus-in-memory-handle-command a-command-1))
+           :cqrs/handle-ok)))
+
   (testing "it should handle an event")
-  )
+  (is (= (-> (bus-in-memory)
+             (bus-in-memory-add an-event-handler-definition-1)
+             (bus-in-memory-add an-event-handler-definition-1)
+             (bus-in-memory-handle-event an-event-1))
+         :cqrs/handle-ok)))
